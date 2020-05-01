@@ -12,8 +12,7 @@ public class Soluçao1 {
 	
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public Soluçao1(Integer roomNumber, Date checkIn, Date checkOut) {
-		
+	public Soluçao1(Integer roomNumber, Date checkIn, Date checkOut) {	
 		this.roomNumber = roomNumber;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -38,16 +37,28 @@ public class Soluçao1 {
 		long diff = checkOut.getTime() - checkIn.getTime();  //transforma checkin/out em milisegundos
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS); //converte a varialvel diff para dias
 	}
-	public void updateDates(Date checkIn, Date checkOut) {
+	public String updateDates(Date checkIn, Date checkOut) {
+		Date date = new Date();
+		if (checkIn.before(date) || checkOut.before(date)) {
+			return "Date must be after ";
+		}
+		if (!checkOut.after(checkIn)) {
+			return "Error in reservation: check-Out must be after chek-in";
+		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		return null;
 	}
 
 	@Override
 	public String toString() {
-		return "Room number = " + roomNumber + ", check-in = " + sdf.format(checkIn) + ", Check-out = " + sdf.format(checkOut)+" , "
-		+ duration()+" nights";
+		return "Room= " + roomNumber + ", checkIn = " + sdf.format(checkIn) + 
+				", checkOut = " + sdf.format(checkOut)+","+ " Days: "+ duration() ;
 	}
+	
+	
+
+	
 	
 	
 
